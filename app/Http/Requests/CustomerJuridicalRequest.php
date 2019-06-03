@@ -26,7 +26,7 @@ class CustomerJuridicalRequest extends FormRequest
             'name' => 'require|max:255',
             'fantasy' => 'max:255',
             'company_identity' => 'numeric',
-            'cnpj' => 'required|numeric|size:14',
+            'cnpj' => 'required|numeric|digits:14',
             'type_customer' => 'required|in:manufacturer,provider'
         ];
 

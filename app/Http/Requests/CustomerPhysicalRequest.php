@@ -24,7 +24,7 @@ class CustomerPhysicalRequest extends FormRequest
 
         $rules = [
             'name' => 'require|max:255',
-            'cpf' => 'require|numeric|size:11',
+            'cpf' => 'require|numeric|digits:11',
             'birth' => 'date',
             'type_customer' => 'required|in:manufacturer,provider'
         ];

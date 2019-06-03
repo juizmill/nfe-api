@@ -6,7 +6,7 @@ use App\Customer;
 use Faker\Generator as Faker;
 
 $factory->define(Customer::class, function (Faker $faker) {
-    $typeCustomer = ['fabricante', 'fornecedor'];
+    $typeCustomer = ['provider', 'manufacturer'];
     return [
         'type_customer' => $typeCustomer[rand(0,1)],
         'name' => $faker->name,

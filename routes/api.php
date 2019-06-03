@@ -32,4 +32,14 @@ Route::get('/redirect', function () {
 
 Route::middleware('auth:api')->group(function () {
     Route::get('user', 'PassportController@details');
+
+    Route::group(['prefix' => 'company'], function () {
+        Route::post('store', ['uses' => 'CompanyController@store'])->name('api.company.store');
+        Route::post('show', ['uses' => 'CompanyController@show'])->name('api.company.show');
+        Route::put('update', ['uses' => 'CompanyController@update'])->name('api.company.update');
+        Route::delete('destroy', ['uses' => 'CompanyController@destroy'])->name('api.company.destroy');
+    });
+
 });
+
+
