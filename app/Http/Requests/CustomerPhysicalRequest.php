@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CustomerPhysicalRequest extends FormRequest
@@ -17,19 +18,26 @@ class CustomerPhysicalRequest extends FormRequest
     /**
      * {@inheritDoc}
      */
-    public function rules()
+    public function rules(Request $request)
     {
         $address = AddressRequest::$customRoles;
         $person = PersonRequest::$customRoles;
 
         $rules = [
-            'name' => 'require|max:255',
-            'cpf' => 'require|numeric|digits:11',
+            'name' => 'required|max:255',
+            'cpf' => 'required|numeric|digits:11|unique:customers',
             'birth' => 'date',
             'type_customer' => 'required|in:manufacturer,provider'
         ];
 
-        $rules = array_merge($rules, $address, $person);
+        $rules = $rules+$address+$person;
+
+        if ($request->method() == Request::METHOD_PUT) {
+            $data = $request->toArray();
+
+            $rules['id'] = 'required|numeric';
+            $rules['cpf'] = $rules['cpf'] . ',id,'. $data['id'];
+        }
 
         return $rules;
     }
