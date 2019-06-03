@@ -38,7 +38,7 @@ class CreateCompanyTable extends Migration
 
             //Person
             $table->boolean('active')->default(true);
-            $table->enum('type', ['J', 'F'])->default('J');
+            $table->enum('type', ['J', 'P'])->default('J');
             $table->string('cell_phone', 15)->nullable()->default(null);
             $table->string('phone', 15)->nullable()->default(null);
             $table->string('email', 255)->unique();

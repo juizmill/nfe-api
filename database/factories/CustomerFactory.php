@@ -13,7 +13,7 @@ $factory->define(Customer::class, function (Faker $faker) {
         'cpf' => $faker->cpf(false),
         'birth' => $faker->date(),
         'active' => true,
-        'type' => 'F',
+        'type' => 'P',
         'cell_phone' => $faker->cellphoneNumber,
         'phone' => $faker->phoneNumber,
         'email' => $faker->companyEmail,

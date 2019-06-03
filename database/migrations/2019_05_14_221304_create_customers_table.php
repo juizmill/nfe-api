@@ -27,10 +27,11 @@ class CreateCustomersTable extends Migration
             $table->string('cpf', 11)->nullable()->default(null)->unique();
             $table->date('birth')->nullable()->default(null);
 
+            $table->enum('type_customer', ['manufacturer', 'provider'])->default('manufacturer');
+
             //Person
             $table->boolean('active')->default(true);
-            $table->enum('type', ['J', 'F'])->default('J');
-            $table->enum('type_customer', ['fabricante', 'fornecedor'])->default('fabricante');
+            $table->enum('type', ['J', 'P'])->default('J');
             $table->string('cell_phone', 15)->nullable()->default(null);
             $table->string('phone', 15)->nullable()->default(null);
             $table->string('email', 255)->unique();
