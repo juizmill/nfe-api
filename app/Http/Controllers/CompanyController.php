@@ -3,74 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Company;
-use Illuminate\Http\Request;
 use App\Http\Requests\CompanyRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class CompanyController extends Controller
 {
+    public function index()
+    {
+        $companies = Company::paginate(15);
+
+        return response()->json($companies);
+    }
+
     public function store(CompanyRequest $request)
     {
         if ($company = Company::query()->create($request->toArray())) {
-            return response()->json([
-                'message' => 'Cadastro realizado com sucesso!',
-                'company' => $company
-            ], Response::HTTP_CREATED);
+            return response()->json($company, Response::HTTP_CREATED);
         }
 
-        return response()->json([
-            'message' => 'Não foi possível cadastrar. Tente novamente!'
-        ], Response::HTTP_BAD_REQUEST);
+        return response()->json(self::ERROR_STORE, Response::HTTP_BAD_REQUEST);
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
-        $data = $request->toArray();
-
-        if ($company = Company::query()->find($data['id'])) {
-            return response()->json([
-                'company' => $company
-            ], Response::HTTP_OK);
+        if ($company = Company::query()->find($id)) {
+            return response()->json($company, Response::HTTP_OK);
         }
 
-        return response()->json([
-            'message' => 'Não foi possível localizar. Tente novamente!'
-        ], Response::HTTP_BAD_REQUEST);
+        return response()->json(self::ERROR_SHOW, Response::HTTP_BAD_REQUEST);
     }
 
-    public function update(CompanyRequest $request)
+    public function update(CompanyRequest $request, $id)
     {
-        $data = $request->toArray();
+        if ($company = Company::query()->find($id)) {
+            $data = $request->toArray();
 
-        if ($company = Company::query()->find($data['id'])) {
             if ($company->update($data)) {
-                return response()->json([
-                    'message' => 'Atualizado com sucesso!',
-                    'company' => $company
-                ], Response::HTTP_ACCEPTED);
+                return response()->json($company, Response::HTTP_ACCEPTED);
             }
         }
 
-        return response()->json([
-            'message' => 'Não foi possível atualizar. Tente novamente!'
-        ], Response::HTTP_BAD_REQUEST);
+        return response()->json(self::ERROR_UPDATE, Response::HTTP_BAD_REQUEST);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $data = $request->toArray();
-
-        if ($company = Company::query()->find($data['id'])) {
+        if ($company = Company::query()->find($id)) {
             if ($company->delete()) {
-                return response()->json([
-                    'message' => 'Removido com sucesso!',
-                    'company' => $company
-                ], Response::HTTP_OK);
+                return response()->json($company, Response::HTTP_OK);
             }
         }
 
-        return response()->json([
-            'message' => 'Não foi possível remover. Tente novamente!'
-        ], Response::HTTP_BAD_REQUEST);
+        return response()->json(self::ERROR_DESTROY, Response::HTTP_BAD_REQUEST);
     }
 }

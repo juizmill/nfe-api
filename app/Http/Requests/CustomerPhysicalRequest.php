@@ -3,21 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerPhysicalRequest extends FormRequest
+class CustomerPhysicalRequest extends BaseFormRequest
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function rules(Request $request)
     {
         $address = AddressRequest::$customRoles;
@@ -30,13 +18,12 @@ class CustomerPhysicalRequest extends FormRequest
             'type_customer' => 'required|in:manufacturer,provider'
         ];
 
-        $rules = $rules+$address+$person;
+        $rules = $rules + $address + $person;
 
         if ($request->method() == Request::METHOD_PUT) {
-            $data = $request->toArray();
+            $id = Request::instance()->id;
 
-            $rules['id'] = 'required|numeric';
-            $rules['cpf'] = $rules['cpf'] . ',id,'. $data['id'];
+            $rules['cpf'] = $rules['cpf'] . ',id,' . $id;
         }
 
         return $rules;

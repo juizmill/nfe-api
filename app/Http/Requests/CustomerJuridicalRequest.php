@@ -3,21 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerJuridicalRequest extends FormRequest
+class CustomerJuridicalRequest extends BaseFormRequest
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function rules(Request $request)
     {
         $address = AddressRequest::$customRoles;
@@ -31,13 +19,12 @@ class CustomerJuridicalRequest extends FormRequest
             'type_customer' => 'required|in:manufacturer,provider'
         ];
 
-        $rules = $rules+$address+$person;
+        $rules = $rules + $address + $person;
 
         if ($request->method() == Request::METHOD_PUT) {
-            $data = $request->toArray();
+            $id = Request::instance()->id;
 
-            $rules['id'] = 'required|numeric';
-            $rules['cnpj'] = $rules['cnpj'] . ',id,'. $data['id'];
+            $rules['cnpj'] = $rules['cnpj'] . ',id,' . $id;
         }
 
         return $rules;
