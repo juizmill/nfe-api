@@ -24,8 +24,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $queuesEveryMinute = [
+            'recover.password',
+            'reset.password'
+        ];
+
+        foreach ($queuesEveryMinute as $queue) {
+            $schedule->command("queue:work --queue={$queue} --stop-when-empty")
+                ->everyMinute()
+                ->runInBackground()
+                ->onOneServer();
+        }
     }
 
     /**

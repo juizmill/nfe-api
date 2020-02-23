@@ -13,8 +13,8 @@ class LoginUserTest extends TestCaseAuthentication
             Request::METHOD_POST,
             '/v1/login',
             [
-                'email' => 'test@email.com',
-                'password' => '123456'
+                'email' => self::USER_EMAIL,
+                'password' => 'password'
             ]
         );
 
