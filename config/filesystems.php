@@ -42,6 +42,10 @@ return [
     */
 
     'disks' => [
+        'routes' => [
+            'driver' => 'local',
+            'root' => base_path('routes'),
+        ],
 
         'local' => [
             'driver' => 'local',
