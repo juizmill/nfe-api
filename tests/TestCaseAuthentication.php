@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -19,7 +20,7 @@ abstract class TestCaseAuthentication extends BaseTestCase
         $user = new User([
             'name' => 'teste',
             'email' => 'test@email.com',
-            'password' => '123456'
+            'password' => Hash::make('123456')
         ]);
 
         $user->save();
