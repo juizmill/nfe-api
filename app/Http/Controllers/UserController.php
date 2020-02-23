@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Service\MaterialTable;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
@@ -26,6 +27,7 @@ class UserController extends Controller
     {
         try {
             $data = $request->only(['name', 'email', 'password']);
+            $data['password'] = Hash::make($data['password']);
             $user = User::query()->create($data);
 
             return response()->json($user, Response::HTTP_CREATED);
