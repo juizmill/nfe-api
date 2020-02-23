@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Http\Request;
+
+class UserUpdatePasswordRequest extends BaseFormRequest
+{
+    public function rules(Request $request): array
+    {
+        return [
+            'old_password' => 'required|max:190|min:5|password:api',
+            'password_confirmation' => 'required|max:190|min:5',
+            'password' => 'required|max:190|min:5|confirmed:password_confirmation',
+        ];
+    }
+}

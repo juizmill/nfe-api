@@ -5,7 +5,14 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property string name
+ * @property string email
+ * @property string password
+ * @property string token
+ */
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -32,18 +39,28 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
 
-    public function hasPermission(Permission $permission)
+    public function hasPermission(Permission $permission): bool
     {
-        return !!$permission->intersect($this->roles())->count();
+        $roles = $permission->roles()->get();
+        if ($roles->count()) {
+            return !!$roles->intersect($this->roles()->get())->count();
+        }
+
+        return false;
     }
 
-    public function isSuperAdmin()
+    public function hasSuperUser(): bool
     {
-        return $this->roles()->contains('name', 'admin');
+        $roles = $this->roles()->get();
+        if ($roles->count()) {
+            return $roles->contains('name', 'administrador');
+        }
+
+        return false;
     }
 }

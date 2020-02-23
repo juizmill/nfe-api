@@ -8,7 +8,7 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
-class ApiPropectedRoute extends BaseMiddleware
+class ApiProtectedRoute extends BaseMiddleware
 {
     public function handle($request, Closure $next)
     {
