@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Service\MaterialTable;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\CompanyRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -14,7 +15,7 @@ class CompanyController extends Controller
 {
     public function index(Request $request)
     {
-        $companies = (new MaterialTable($request, Company::query()))
+        $companies = (new MaterialTable($request, $this->companyBuilder()))
             ->setColumns(['xNome', 'xFant', 'fone', 'active', 'created_at'])
             ->pagination();
 
@@ -61,7 +62,7 @@ class CompanyController extends Controller
     public function show($id)
     {
         try {
-            $company = Company::query()->findOrFail($id);
+            $company = $this->companyBuilder()->findOrFail($id);
             return response()->json($company, Response::HTTP_OK);
         } catch (ModelNotFoundException $exception) {
             Log::info($exception->getMessage());
@@ -73,7 +74,7 @@ class CompanyController extends Controller
     public function update(CompanyRequest $request, $id)
     {
         try {
-            $company = Company::query()->findOrFail($id);
+            $company = $this->companyBuilder()->findOrFail($id);
             $data = $request->only([
                 'xNome',
                 'xFant',
@@ -112,7 +113,7 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         try {
-            $company = Company::query()->findOrFail($id);
+            $company = $this->companyBuilder()->findOrFail($id);
             $company->delete();
 
             return response()->json($company, Response::HTTP_OK);
@@ -121,5 +122,12 @@ class CompanyController extends Controller
             Log::warning($exception->getTraceAsString());
             return response()->json(self::ERROR_DESTROY, Response::HTTP_NOT_FOUND);
         }
+    }
+
+    protected function companyBuilder(): Builder
+    {
+        $user = auth('api')->user();
+        return Company::query()
+            ->where('user_id', '=', $user->id);
     }
 }
