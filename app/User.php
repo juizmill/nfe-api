@@ -10,10 +10,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @property string name
- * @property string email
- * @property string password
- * @property string token
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $token
  */
 class User extends Authenticatable implements JWTSubject
 {
@@ -77,5 +77,10 @@ class User extends Authenticatable implements JWTSubject
     public function customers(): HasMany
     {
         return $this->hasMany(Customer::class);
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }

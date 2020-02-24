@@ -6,27 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property string xNome
- * @property string xFant
- * @property string IE
- * @property string IEST
- * @property string IM
- * @property string CNAE
- * @property string CRT
- * @property string CPFCNPJ
- * @property string type
- * @property string xLgr
- * @property string nro
- * @property string xCpl
- * @property string xBairro
- * @property string cMun
- * @property string xMun
- * @property string UF
- * @property string CEP
- * @property string cPais
- * @property string xPais
- * @property string fone
- * @property string active
+ * @property string $xNome
+ * @property string $xFant
+ * @property string $IE
+ * @property string $IEST
+ * @property string $IM
+ * @property string $CNAE
+ * @property string $CRT
+ * @property string $CPFCNPJ
+ * @property string $type
+ * @property string $xLgr
+ * @property string $nro
+ * @property string $xCpl
+ * @property string $xBairro
+ * @property string $cMun
+ * @property string $xMun
+ * @property string $UF
+ * @property string $CEP
+ * @property string $cPais
+ * @property string $xPais
+ * @property string $fone
+ * @property string $active
  */
 class Company extends Model
 {
