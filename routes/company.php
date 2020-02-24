@@ -8,19 +8,21 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'company'], function () {
-    Route::get('/', ['uses' => 'CompanyController@index'])
-    ->name('api.company.index');
+    Route::get('/', 'CompanyController@index')
+        ->name('api.company.index');
 
-    Route::get('{id}/show', ['uses' => 'CompanyController@show'])
+    Route::get('{id}/show', 'CompanyController@show')
         ->where('id', '[0-9]+')
         ->name('api.company.show');
 
-    Route::post('store', ['uses' => 'CompanyController@store'])->name('api.company.store');
-    Route::put('{id}/update', ['uses' => 'CompanyController@update'])
+    Route::post('store', 'CompanyController@store')
+        ->name('api.company.store');
+
+    Route::put('{id}/update', 'CompanyController@update')
         ->where('id', '[0-9]+')
         ->name('api.company.update');
 
-    Route::delete('{id}/destroy', ['uses' => 'CompanyController@destroy'])
+    Route::delete('{id}/destroy', 'CompanyController@destroy')
         ->where('id', '[0-9]+')
         ->name('api.company.destroy');
 });

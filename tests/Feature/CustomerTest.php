@@ -2,17 +2,17 @@
 
 namespace Tests\Feature;
 
-use App\Company;
+use App\Customer;
 use Illuminate\Http\Request;
 use Tests\TestCaseAuthentication;
 
-class CompanyTest extends TestCaseAuthentication
+class CustomerTest extends TestCaseAuthentication
 {
     public function testIndex()
     {
         $response = $this->json(
             Request::METHOD_GET,
-            '/v1/company',
+            '/v1/customer',
             [],
             $this->customHeaders
         );
@@ -38,16 +38,10 @@ class CompanyTest extends TestCaseAuthentication
     {
         $response = $this->json(
             Request::METHOD_POST,
-            '/v1/company/store',
+            '/v1/customer/store',
             [
-                'xNome' => 'Company Teste',
-                'xFant' => 'Teste 123',
-                'IE' => '54654',
-                'IEST' => '5545',
-                'IM' => '5212',
-                'CNAE' => '12313',
-                'CRT' => '1',
-                'CPFCNPJ' => '68308429000184',
+                'xNome' => 'teste 123',
+                'CPFCNPJ' => '19871154000187',
                 'type' => 'J',
                 'xLgr' => 'Rua da Pipa',
                 'nro' => '231',
@@ -67,7 +61,6 @@ class CompanyTest extends TestCaseAuthentication
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'xNome',
-            'xFant',
             'id'
         ]);
     }
@@ -76,7 +69,7 @@ class CompanyTest extends TestCaseAuthentication
     {
         $response = $this->json(
             'POST',
-            '/v1/company/store',
+            '/v1/customer/store',
             [],
             $this->customHeaders
         );
@@ -85,7 +78,6 @@ class CompanyTest extends TestCaseAuthentication
         $response->assertJsonStructure([
             'errors' => [
                 'xNome',
-                'xFant',
                 'CPFCNPJ'
             ]
         ]);
@@ -93,22 +85,16 @@ class CompanyTest extends TestCaseAuthentication
 
     public function testUpdate()
     {
-        $company = factory(Company::class)->create([
+        $customer = factory(Customer::class)->create([
             'user_id' => $this->user->id
         ]);
 
         $response = $this->json(
             Request::METHOD_PUT,
-            "/v1/company/{$company->id}/update",
+            "/v1/customer/{$customer->id}/update",
             [
-                'xNome' => 'Company Teste',
-                'xFant' => 'Teste 123',
-                'IE' => '54654',
-                'IEST' => '5545',
-                'IM' => '5212',
-                'CNAE' => '12313',
-                'CRT' => '1',
-                'CPFCNPJ' => '12785448000147',
+                'xNome' => 'teste 123',
+                'CPFCNPJ' => '19871154000187',
                 'type' => 'J',
                 'xLgr' => 'Rua da Pipa',
                 'nro' => '231',
@@ -128,7 +114,6 @@ class CompanyTest extends TestCaseAuthentication
         $response->assertStatus(202);
         $response->assertJsonStructure([
             'xNome',
-            'xFant',
             'id'
         ]);
     }
@@ -137,16 +122,10 @@ class CompanyTest extends TestCaseAuthentication
     {
         $response = $this->json(
             Request::METHOD_PUT,
-            '/v1/company/100/update',
+            '/v1/customer/100/update',
             [
-                'xNome' => 'Company Teste',
-                'xFant' => 'Teste 123',
-                'IE' => '54654',
-                'IEST' => '5545',
-                'IM' => '5212',
-                'CNAE' => '12313',
-                'CRT' => '1',
-                'CPFCNPJ' => '12785448000147',
+                'xNome' => 'teste 123',
+                'CPFCNPJ' => '19871154000187',
                 'type' => 'J',
                 'xLgr' => 'Rua da Pipa',
                 'nro' => '231',
@@ -168,13 +147,13 @@ class CompanyTest extends TestCaseAuthentication
 
     public function testDestroySuccess()
     {
-        $company = factory(Company::class)->create([
+        $customer = factory(Customer::class)->create([
             'user_id' => $this->user->id
         ]);
 
         $response = $this->json(
             Request::METHOD_DELETE,
-            "/v1/company/{$company->id}/destroy",
+            "/v1/customer/{$customer->id}/destroy",
             [],
             $this->customHeaders
         );
@@ -190,7 +169,7 @@ class CompanyTest extends TestCaseAuthentication
     {
         $response = $this->json(
             Request::METHOD_DELETE,
-            "/v1/company/100/destroy",
+            "/v1/customer/100/destroy",
             [],
             $this->customHeaders
         );

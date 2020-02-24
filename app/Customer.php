@@ -3,33 +3,43 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Customer extends Model
 {
-    protected $table = 'customers';
+    const IND_IE_DEST_ONE = 1;
+    const IND_IE_DEST_TWO = 2;
+    const IND_IE_DEST_NINE = 9;
+
+    const JURIDICO = 'J';
+    const FISICO = 'F';
 
     protected $fillable = [
-        'id',
-        'name',
-        'fantasy',
-        'company_identity',
-        'cnpj',
-        'cpf',
-        'birth',
-        'active',
-        'type',
-        'cell_phone',
-        'phone',
+        'xNome',
+        'indIEDest',
+        'IE',
+        'ISUF',
+        'IM',
         'email',
-        'neighborhood',
-        'cep',
-        'complement',
-        'address',
-        'city',
-        'establishment_number',
-        'state',
-        'uf',
-        'created_at',
-        'updated_at'
+        'CPFCNPJ',
+        'idEstrangeiro',
+        'type',
+        'xLgr',
+        'nro',
+        'xCpl',
+        'xBairro',
+        'cMun',
+        'xMun',
+        'UF',
+        'CEP',
+        'cPais',
+        'xPais',
+        'fone',
+        'user_id'
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

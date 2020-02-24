@@ -17,6 +17,7 @@ abstract class TestCaseAuthentication extends BaseTestCase
     use CreatesApplication;
     use RefreshDatabase;
 
+    protected $user;
     protected $customHeaders;
 
     public function setUp(): void
@@ -33,6 +34,7 @@ abstract class TestCaseAuthentication extends BaseTestCase
 
         $token = \Tymon\JWTAuth\Facades\JWTAuth::fromUser($user);
 
+        $this->user = $user;
         $this->customHeaders = [
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $token
