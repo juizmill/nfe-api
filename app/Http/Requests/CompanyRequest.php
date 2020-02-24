@@ -3,41 +3,40 @@
 namespace App\Http\Requests;
 
 use Illuminate\Http\Request;
+use App\Rules\CnpjOrCpfValidation;
 
 class CompanyRequest extends BaseFormRequest
 {
     public function rules(Request $request)
     {
         $address = AddressRequest::$customRoles;
-        $person = PersonRequest::$customRoles;
-
-        $person['email'] = 'required|max:190|unique:companies';
 
         $rules = [
-            'regime' => 'max:120',
-            'token_ibpt' => 'max:190',
-            'csc_id' => 'max:120',
-            'key_csc' => 'max:190',
-            'certified' => 'max:190',
-            'password_certified' => 'max:190',
-            'ambient' => 'required|in:1,0',
-            'logo_nfe' => 'max:190',
-            'email_nfe' => 'max:190|unique:companies',
-            'password_email_nfe' => 'max:190',
-            'name' => 'required|max:190',
-            'fantasy' => 'max:190',
-            'identity' => 'numeric',
-            'cnpj' => 'required|numeric|digits:14|unique:companies',
+            'xNome' => 'required|max:60',
+            'xFant' => 'required|max:60',
+            'IE' => 'max:14',
+            'IEST' => 'max:14',
+            'IM' => 'max:15',
+            'CNAE' => 'max:7',
+            'CRT' => 'required|in:1,2,3',
+            'CPFCNPJ' => [
+                'required',
+                'max:14',
+                new CnpjOrCpfValidation(),
+                'unique:companies'
+            ],
+            'type' => 'required|in:J,F',
         ];
 
-        $rules = $rules + $address + $person;
+        $rules += $address;
 
         if ($request->method() == Request::METHOD_PUT) {
             $id = Request::instance()->id;
-
-            $rules['email'] = $rules['email'] . ',id,' . $id;
-            $rules['email_nfe'] = $rules['email_nfe'] . ',id,' . $id;
-            $rules['cnpj'] = $rules['cnpj'] . ',id,' . $id;
+                unset($rules['CPFCNPJ'][3]);
+                $rules['CPFCNPJ'] = array_merge(
+                    $rules['CPFCNPJ'],
+                    [ 'unique:companies,id,'.$id ]
+                );
         }
 
         return $rules;

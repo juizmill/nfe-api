@@ -9,8 +9,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        factory(User::class, 20)->create();
-        factory(Company::class, 4)->create();
+        factory(Company::class, 20)->create();
         factory(Customer::class, 10)->create();
     }
 }

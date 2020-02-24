@@ -5,13 +5,13 @@ namespace App\Http\Requests;
 final class AddressRequest
 {
     public static $customRoles = [
-        'neighborhood' => 'required|max:80',
-        'cep' => 'required|digits:8',
-        'complement' => 'max:80',
-        'address' => 'required|max:255',
-        'city' => 'required|max:150',
-        'establishment_number' => 'required|max:80',
-        'state' => 'required|max:120',
-        'uf' => 'required|in:AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PR,PB,PA,PE,PI,RJ,RN,RS,RO,RR,SC,SE,SP,TO'
+        'xLgr' => 'required|max:191',
+        'nro' => 'required|max:60',
+        'xCpl' => 'max:60',
+        'cMun' => 'required|max:7',
+        'xMun' => 'required|max:60',
+        'UF' => 'required|in:AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PR,PB,PA,PE,PI,RJ,RN,RS,RO,RR,SC,SE,SP,TO',
+        'CEP' => 'required|max:8',
+        'fone' => 'required|max:14'
     ];
 }

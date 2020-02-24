@@ -18,13 +18,13 @@ class CreateCompanyTable extends Migration
             $table->string('IM', 15)->nullable()->default(null);
             $table->string('CNAE', 7)->nullable()->default(null);
             $table->enum('CRT', [1, 2, 3])->default(1);
-            $table->string('CPFCNPJ', 14);
+            $table->string('CPFCNPJ', 14)->unique();
             $table->enum('type', ['J', 'F'])->default('J');
 
             //Endereço
             $table->string('xLgr', 191);
             $table->string('nro', 60);
-            $table->string('xCpl', 60);
+            $table->string('xCpl', 60)->nullable()->default(null);
             $table->string('xBairro', 60);
             $table->string('cMun', 7);
             $table->string('xMun', 60);

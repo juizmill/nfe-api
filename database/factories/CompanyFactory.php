@@ -1,13 +1,18 @@
 <?php
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
-
+use App\User;
 use App\Company;
 use Faker\Generator as Faker;
 
 $factory->define(Company::class, function (Faker $faker) {
-    $bairros = ['Centro', 'Vila Paris', 'Vila Nova', 'São Bento', 'Interlagos'];
-
+    $bairros = [
+        'Centro',
+        'Vila Paris',
+        'Vila Nova',
+        'São Bento',
+        'Interlagos'
+    ];
 
     return [
         'xNome' => $faker->company,
@@ -24,6 +29,10 @@ $factory->define(Company::class, function (Faker $faker) {
         'xMun' => $faker->city, //Nome do município
         'UF' => $faker->stateAbbr,
         'CEP' => str_replace('-', '', $faker->postcode),
-        'fone' => $faker->phone
+        'fone' => $faker->phone,
+        'user_id' => function () {
+            $user = factory(User::class)->create();
+            return $user->id;
+        }
     ];
 });
