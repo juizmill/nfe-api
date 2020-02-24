@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -65,5 +66,10 @@ class User extends Authenticatable implements JWTSubject
         }
 
         return false;
+    }
+
+    public function company(): HasOne
+    {
+        return $this->hasOne(Company::class);
     }
 }

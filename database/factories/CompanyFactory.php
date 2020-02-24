@@ -1,27 +1,38 @@
 <?php
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
-
+use App\User;
 use App\Company;
 use Faker\Generator as Faker;
 
 $factory->define(Company::class, function (Faker $faker) {
+    $bairros = [
+        'Centro',
+        'Vila Paris',
+        'Vila Nova',
+        'São Bento',
+        'Interlagos'
+    ];
+
     return [
-        'ambient' => false,
-        'name' => $faker->company,
-        'fantasy' => $faker->companySuffix,
-        'cnpj' => $faker->cnpj(false),
+        'xNome' => $faker->company,
+        'xFant' => $faker->companySuffix,
+        'CPFCNPJ' => $faker->cnpj(false),
         'active' => true,
         'type' => 'J',
-        'cell_phone' => $faker->cellphoneNumber,
-        'phone' => $faker->phoneNumber,
-        'email' => $faker->companyEmail,
-        'neighborhood' => $faker->citySuffix,
-        'cep' => str_replace('-', '', $faker->postcode),
-        'address' => $faker->streetName,
-        'city' => $faker->city,
-        'establishment_number' => $faker->buildingNumber,
-        'state' => $faker->state,
-        'uf' => $faker->stateAbbr
+
+        'xLgr' => $faker->streetName, //Nome do logradouro
+        'nro' => rand(100, 800), //Número
+        'xCpl' => 'Loja', //Complemento
+        'xBairro' => $bairros[rand(0, 4)],
+        'cMun' => '852', //Código do Município do Contribuinte, conforme Tabela do IBGE
+        'xMun' => $faker->city, //Nome do município
+        'UF' => $faker->stateAbbr,
+        'CEP' => str_replace('-', '', $faker->postcode),
+        'fone' => $faker->phone,
+        'user_id' => function () {
+            $user = factory(User::class)->create();
+            return $user->id;
+        }
     ];
 });
