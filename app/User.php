@@ -10,10 +10,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @property string name
- * @property string email
- * @property string password
- * @property string token
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $token
  */
 class User extends Authenticatable implements JWTSubject
 {
