@@ -40,10 +40,10 @@ Route::prefix('/user')->group(function () {
 */
 Route::prefix('/user/role')->group(function () {
     Route::post('store', 'UserRoleController@store')
-        ->middleware('can:user.role.store')
+        //->middleware('can:user.role.store')
         ->name('user.role.store');
 
-    Route::delete('delete', 'UserRoleController@destroy')
-        ->middleware('can:user.role.destroy')
+    Route::delete('destroy', 'UserRoleController@destroy')
+        //->middleware('can:user.role.destroy')
         ->name('user.role.destroy');
 });

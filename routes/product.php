@@ -9,20 +9,20 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['prefix' => 'product'], function () {
     Route::get('/', 'ProductController@index')
-        ->name('api.product.index');
+        ->name('product.index');
 
     Route::get('{id}/show', 'ProductController@show')
         ->where('id', '[0-9]+')
-        ->name('api.product.show');
+        ->name('product.show');
 
     Route::post('store', 'ProductController@store')
-        ->name('api.product.store');
+        ->name('product.store');
 
     Route::put('{id}/update', 'ProductController@update')
         ->where('id', '[0-9]+')
-        ->name('api.product.update');
+        ->name('product.update');
 
     Route::delete('{id}/destroy', 'ProductController@destroy')
         ->where('id', '[0-9]+')
-        ->name('api.product.destroy');
+        ->name('product.destroy');
 });

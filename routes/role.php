@@ -9,26 +9,26 @@ use Illuminate\Support\Facades\Route;
 */
 Route::prefix('/role')->group(function () {
     Route::get('/', 'RoleController@index')
-        ->middleware('can:role.index')
+        //->middleware('can:role.index')
         ->name('role.index');
 
     Route::get('{id}/show', 'RoleController@show')
         ->where(['id' => '[0-9]+'])
-        ->middleware('can:role.show')
+        //->middleware('can:role.show')
         ->name('role.show');
 
     Route::post('store', 'RoleController@store')
-        ->middleware('can:role.store')
+        //->middleware('can:role.store')
         ->name('role.store');
 
     Route::put('{id}/update', 'RoleController@update')
         ->where(['id' => '[0-9]+'])
-        ->middleware('can:role.update')
+        //->middleware('can:role.update')
         ->name('role.update');
 
-    Route::delete('{id}/delete', 'RoleController@destroy')
+    Route::delete('{id}/destroy', 'RoleController@destroy')
         ->where(['id' => '[0-9]+'])
-        ->middleware('can:role.destroy')
+        //->middleware('can:role.destroy')
         ->name('role.destroy');
 });
 
@@ -39,10 +39,10 @@ Route::prefix('/role')->group(function () {
 */
 Route::prefix('/role/permission')->group(function () {
     Route::post('store', 'RolePermissionController@store')
-        ->middleware('can:role.permission.store')
+        //->middleware('can:role.permission.store')
         ->name('role.permission.store');
 
-    Route::delete('delete', 'RolePermissionController@destroy')
-        ->middleware('can:role.permission.destroy')
+    Route::delete('destroy', 'RolePermissionController@destroy')
+        //->middleware('can:role.permission.destroy')
         ->name('role.permission.destroy');
 });

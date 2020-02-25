@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -39,11 +39,30 @@ class AuthController extends Controller
 
     protected function respondWithToken($token)
     {
+        /** @var \App\User $user */
+        $user = auth('api')->user();
+
+        $roles = collect($user->roles()->get())->map(function ($role) {
+            return $role->name;
+        });
+
+        $permissions = collect(
+            $user->roles()->with('permissions')->get()->pluck('permissions')->flatten()
+        )->map(function ($permission) {
+            return $permission->name;
+        });
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'user' => auth('api')->user()->toArray()
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+                'created_at' => $user->created_at,
+                'roles' => $roles,
+                'permissions' => $permissions
+            ]
         ]);
     }
 }

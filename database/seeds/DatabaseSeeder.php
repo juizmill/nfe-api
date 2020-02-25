@@ -9,9 +9,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        factory(Company::class, 20)->create();
-        factory(Customer::class, 10)->create();
+        $this->call([
+            CompanySeeder::class,
+            CustomerSeeder::class,
+            ProductSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
+            AddRoleAndPermissionFirstUserSeeder::class,
 
-        factory(Product::class, 500)->create();
+        ]);
     }
 }

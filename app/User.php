@@ -63,7 +63,7 @@ class User extends Authenticatable implements JWTSubject
     {
         $roles = $this->roles()->get();
         if ($roles->count()) {
-            return $roles->contains('name', 'administrador');
+            return $roles->contains('name', 'super-administrador');
         }
 
         return false;
