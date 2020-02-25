@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\User;
 use App\Permission;
-use App\Policies\PermissionPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -28,6 +27,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        if (config('app.env') !== 'production') {
+            if (\Illuminate\Support\Facades\Schema::hasTable('permissions')) {
+                $this->loadPermissions();
+            }
+        } else {
+            $this->loadPermissions();
+        }
+    }
+
+    private function loadPermissions()
+    {
         $permissions = Permission::query()->with('roles')->get();
         foreach ($permissions as $permission) {
             /** @var Permission $permission */
