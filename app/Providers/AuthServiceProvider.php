@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         }
     }
 
-    private function loadPermissions()
+    private function loadPermissions(): void
     {
         $permissions = Permission::query()->with('roles')->get();
         foreach ($permissions as $permission) {
