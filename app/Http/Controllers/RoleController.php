@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RoleRequest;
 use App\Role;
-use App\Service\MaterialTable;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Service\MaterialTable;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class RoleController extends Controller
 {
