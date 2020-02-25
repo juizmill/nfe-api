@@ -42,7 +42,7 @@ Route::prefix('/role/permission')->group(function () {
         //->middleware('can:role.permission.store')
         ->name('role.permission.store');
 
-    Route::delete('delete', 'RolePermissionController@destroy')
+    Route::delete('destroy', 'RolePermissionController@destroy')
         //->middleware('can:role.permission.destroy')
         ->name('role.permission.destroy');
 });
