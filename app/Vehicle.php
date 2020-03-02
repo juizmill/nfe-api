@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $placa
  * @property string $UF
  * @property string $RNTC
+ * @property boolean $reboque
  * @property integer $user_id
  * @property integer $transport_id
  */

@@ -1,5 +1,6 @@
 <?php
 
+use App\Vehicle;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +15,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             AddRoleAndPermissionFirstUserSeeder::class,
             TransportSeeder::class,
+            VehicleSeeder::class
         ]);
     }
 }
