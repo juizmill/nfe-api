@@ -4,82 +4,99 @@ namespace App\Http\Controllers;
 
 use App\Vehicle;
 use Illuminate\Http\Request;
+use App\Service\MaterialTable;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\VehicleRequest;
+use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VehicleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $vehicles = (new MaterialTable($request, $this->transportBuilder()))
+            ->setColumns(['placa', 'UF', 'RNTC', 'reboque', 'created_at'])
+            ->pagination();
+
+        return response()->json($vehicles);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(VehicleRequest $request)
     {
-        //
+        try {
+            $data = $request->only([
+                'placa',
+                'UF',
+                'RNTC',
+                'reboque',
+                'transport_id'
+            ]);
+
+            $data['user_id'] = auth('api')->user()->id;
+            $vehicle = Vehicle::query()->create($data);
+
+            return response()->json($vehicle, Response::HTTP_CREATED);
+        } catch (ModelNotFoundException $exception) {
+            Log::info($exception->getMessage());
+            Log::warning($exception->getTraceAsString());
+            return response()->json(self::ERROR_STORE, Response::HTTP_NOT_ACCEPTABLE);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show($id)
     {
-        //
+        try {
+            $vehicle = $this->transportBuilder()->findOrFail($id);
+            return response()->json($vehicle, Response::HTTP_OK);
+        } catch (ModelNotFoundException $exception) {
+            Log::info($exception->getMessage());
+            Log::warning($exception->getTraceAsString());
+            return response()->json(self::ERROR_SHOW, Response::HTTP_BAD_REQUEST);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Vehicle $vehicle)
+    public function update(VehicleRequest $request, $id)
     {
-        //
+        try {
+            $vehicle = $this->transportBuilder()->findOrFail($id);
+            $data = $request->only([
+                'placa',
+                'UF',
+                'RNTC',
+                'reboque',
+                'transport_id'
+            ]);
+
+            $data['user_id'] = auth('api')->user()->id;
+            $vehicle->update($data);
+
+            return response()->json($vehicle, Response::HTTP_ACCEPTED);
+        } catch (ModelNotFoundException $exception) {
+            Log::info($exception->getMessage());
+            Log::warning($exception->getTraceAsString());
+            return response()->json(self::ERROR_UPDATE, Response::HTTP_NOT_ACCEPTABLE);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Vehicle $vehicle)
+    public function destroy($id)
     {
-        //
+        try {
+            $vehicle = $this->transportBuilder()->findOrFail($id);
+            $vehicle->delete();
+
+            return response()->json($vehicle, Response::HTTP_OK);
+        } catch (ModelNotFoundException $exception) {
+            Log::info($exception->getMessage());
+            Log::warning($exception->getTraceAsString());
+            return response()->json(self::ERROR_DESTROY, Response::HTTP_NOT_FOUND);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Vehicle $vehicle)
+    protected function transportBuilder(): Builder
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Vehicle $vehicle)
-    {
-        //
+        $user = auth('api')->user();
+        return Vehicle::query()
+            ->where('user_id', '=', $user->id);
     }
 }
