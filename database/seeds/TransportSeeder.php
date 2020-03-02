@@ -12,7 +12,6 @@ class TransportSeeder extends Seeder
             /** @var User $user */
             $transports = factory(Transport::class, 10)->make();
             $user->transports()->saveMany($transports);
-
         });
     }
 }
