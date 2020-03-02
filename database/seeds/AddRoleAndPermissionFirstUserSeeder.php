@@ -1,8 +1,8 @@
 <?php
 
-use App\Permission;
 use App\Role;
 use App\User;
+use App\Permission;
 use Illuminate\Database\Seeder;
 
 class AddRoleAndPermissionFirstUserSeeder extends Seeder
