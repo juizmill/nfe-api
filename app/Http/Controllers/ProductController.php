@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Product;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Service\MaterialTable;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

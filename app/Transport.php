@@ -28,6 +28,10 @@ class Transport extends Model
         'user_id'
     ];
 
+    protected $hidden = [
+        'user_id'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
