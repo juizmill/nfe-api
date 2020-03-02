@@ -3,17 +3,21 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
+use Illuminate\Auth\Access\AuthorizationException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class ApiProtectedRoute extends BaseMiddleware
 {
     public function handle($request, Closure $next)
     {
         try {
-            JWTAuth::parseToken()->authenticate();
+            $isAuthenticate = JWTAuth::parseToken()->authenticate();
+            if (!$isAuthenticate) {
+                throw new AuthorizationException("User not authorization");
+            }
         } catch (\Exception $exception) {
             if ($exception instanceof TokenInvalidException) {
                 return response()->json(['Token is Invalid'], 403);
