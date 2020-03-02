@@ -1,8 +1,5 @@
 <?php
 
-use App\Product;
-use App\Company;
-use App\Customer;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +13,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             AddRoleAndPermissionFirstUserSeeder::class,
-
+            TransportSeeder::class,
         ]);
     }
 }
