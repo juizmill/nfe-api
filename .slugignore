@@ -1,0 +1,10 @@
+.editorconfig
+.env.ci
+.php_cs
+.styleci.yml
+phpcs.xml
+phpunit.xml
+tests
+readme.md
+.github
+database/*.pdf
