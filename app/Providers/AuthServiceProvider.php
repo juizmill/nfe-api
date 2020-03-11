@@ -26,30 +26,25 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        if (config('app.env') !== 'production') {
-            if (\Illuminate\Support\Facades\Schema::hasTable('permissions')) {
-                $this->loadPermissions();
-            }
-        } else {
-            $this->loadPermissions();
-        }
+        $this->loadPermissions();
     }
 
     private function loadPermissions(): void
     {
-        $permissions = Permission::query()->with('roles')->get();
-        foreach ($permissions as $permission) {
-            /** @var Permission $permission */
-            Gate::define($permission->name, function (User $user) use ($permission) {
-                return $user->hasPermission($permission);
-            });
+        if (\Illuminate\Support\Facades\Schema::hasTable('permissions')) {
+            $permissions = Permission::query()->with('roles')->get();
+            foreach ($permissions as $permission) {
+                /** @var Permission $permission */
+                Gate::define($permission->name, function (User $user) use ($permission) {
+                    return $user->hasPermission($permission);
+                });
 
-            Gate::before(function (User $user) {
-                if ($user->hasSuperUser() === true) {
-                    return true;
-                }
-            });
+                Gate::before(function (User $user) {
+                    if ($user->hasSuperUser() === true) {
+                        return true;
+                    }
+                });
+            }
         }
     }
 }
