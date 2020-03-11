@@ -9,6 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ext-bcmath": "*",
+        "ext-mcrypt": "*",
         "barryvdh/laravel-cors": "^1.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
@@ -49,13 +51,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "post-install-cmd": [
-            "@php artisan migrate --ansi"
-        ],
-        "pre-update-cmd": [
-            "@php artisan migrate --ansi"
-        ],
         "post-autoload-dump": [
+            "@php artisan migrate --ansi",
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
