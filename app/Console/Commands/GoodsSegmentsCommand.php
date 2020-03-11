@@ -45,9 +45,7 @@ class GoodsSegmentsCommand extends Command
     public function handle()
     {
         GoodsSegments::query()->delete();
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         GoodsSegments::query()->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         foreach ($this->goodsSegments as $value) {
             GoodsSegments::query()->create([
                 'name' => $value
