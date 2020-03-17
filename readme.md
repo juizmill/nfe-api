@@ -2,6 +2,8 @@
 
 API construída com o framework Laravel para gerar notas fiscais eletrônicas.
 
+![Laravel](https://github.com/juizmill/nfe-api/workflows/Laravel/badge.svg)
+
 ## Framework
 
 Veja a lista de framework que será utilizado no projeto
