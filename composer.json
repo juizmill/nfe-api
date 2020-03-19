@@ -9,8 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "ext-bcmath": "*",
-        "ext-mcrypt": "*",
         "barryvdh/laravel-cors": "^1.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
