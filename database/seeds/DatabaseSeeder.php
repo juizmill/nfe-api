@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             AddRoleAndPermissionFirstUserSeeder::class,
             TransportSeeder::class,
-            VehicleSeeder::class
+            VehicleSeeder::class,
+            CfopTableSeeder::class,
         ]);
     }
 }
